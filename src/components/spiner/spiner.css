@@ -1,3 +1,4 @@
-.random-planet .landing-icon {
+.landing-icon {
   margin: 0 auto;
+  max-height: 150px;
 }

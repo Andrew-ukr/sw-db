@@ -5,7 +5,7 @@ import Spiner from '../spiner/';
 import ErrMassage from '../err-massage/';
 
 export default class RandomPlanet extends Component {
-  state ={
+  state = {
     planet: {
       imgPath: null,
       name: null,

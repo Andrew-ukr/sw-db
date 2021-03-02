@@ -14,7 +14,7 @@ export default class SwapiService {
 
   async getAllPeople() {
     const res = await this.getResource(`/people/`);
-    return res.results;
+    return res.results.map(this.personForm);
   }
 
   async getPerson(id) {
@@ -51,7 +51,7 @@ export default class SwapiService {
 
   starshipForm(starship, id){
     return {
-      imgPath: `https://starwars-visualguide.com/assets/img/starships/${id}.jpg`,
+      imgPath: `https://starwars-visualguide.com/assets/img/starships/${id+1}.jpg`,
       name: starship.name,
       model: starship.model,
       manufacturer: starship.manufacturer,
@@ -64,8 +64,11 @@ export default class SwapiService {
   }
 
   personForm(people, id){
+    const ident = people.url.replace(/\D/g, '');
     return {
-      imgPath: `https://starwars-visualguide.com/assets/img/people/${id}.jpg`,
+      idKey: ident,
+      url: people.url,
+      imgPath: `https://starwars-visualguide.com/assets/img/people/${ident}.jpg`,
       name: people.name,
       gender: people.gender,
       birthYear: people.birth_year,

@@ -10,20 +10,18 @@ import './app.css';
 
 export default class App extends Component {
   state= {
-    showPerson: null,
+    personId: null,
   }
 
   onPersonClick = (id) => {
     this.setState({
-      showPerson: id,
+      personId: id,
     })
   }
 
   render() {
-    console.log(this.state);
-    
     return (
-      <div>
+      <div className="content-body">
         <Header />
         <RandomPlanet />
   
@@ -36,7 +34,10 @@ export default class App extends Component {
           </div>
 
           <div className="col-md-6">
-            <PersonDetails />
+              
+            <PersonDetails 
+              data={this.state.personId}
+            />
           </div>
 
         </div>

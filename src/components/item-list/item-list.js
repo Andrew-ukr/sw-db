@@ -8,6 +8,7 @@ export default class ItemList extends Component {
   state = {
     peopleList: null,
     err: false,
+    loading: true
   }
 
   getData = new SwapiService();
@@ -16,6 +17,7 @@ export default class ItemList extends Component {
     this.setState({
       peopleList: null,
       err: true,
+      loading: false
     })
   }
 
@@ -23,7 +25,9 @@ export default class ItemList extends Component {
     this.getData.getAllPeople()
     .then((peopleList)=>{
       this.setState({
-        peopleList
+        peopleList,
+        err: false,
+        loading: false
       })
     })
     .catch(this.erroMassage)
@@ -47,12 +51,16 @@ export default class ItemList extends Component {
   }
   
   render() {
-    const {peopleList} = this.state;
-    const listItems = peopleList ? this.list(peopleList): <Spiner />;
+    const {peopleList, loading, err} = this.state;
+    const listItems = peopleList ? this.list(peopleList): null;
+    const loadingIcon = loading ? <Spiner />: null;
+    const errorMassage = err ? <ErrMassage />: null;
 
     return (
       <ul className="item-list list-group">
         {listItems}
+        {loadingIcon}
+        {errorMassage}
       </ul>
     );
   }

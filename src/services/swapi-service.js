@@ -68,7 +68,7 @@ export default class SwapiService {
     return {
       idKey: ident,
       url: people.url,
-      imgPath: `https://starwars-visualguide.com/assets/img/people/${ident}.jpg`,
+      imgPath: `https://starwars-visualguide.com/assets/img/characters/${ident}.jpg`,
       name: people.name,
       gender: people.gender,
       birthYear: people.birth_year,

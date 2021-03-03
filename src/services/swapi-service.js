@@ -12,34 +12,34 @@ export default class SwapiService {
     return await res.json();
   }
 
-  async getAllPeople() {
+  getAllPeople = async () => {
     const res = await this.getResource(`/people/`);
     return res.results.map(this.personForm);
   }
 
-  async getPerson(id) {
+  getPerson = async (id) => {
     return this.personForm(await this.getResource(`/people/${id}/`), id);
   }
 
-  async getAllPlanets() {
+  getAllPlanets = async () => {
     const res = await this.getResource(`/planets/`);
     return res.results;
   }
 
-  async getPlanet(id) {
+  getPlanet = async (id) => {
     return this.planetForm(await this.getResource(`/planets/${id}/`), id)
   }
 
-  async getAllStarships() {
+  getAllStarships = async () => {
     const res = await this.getResource(`/starships/`);
     return res.results;
   }
 
-  async getStarship(id) {
+  getStarship = async (id) => {
     return this.starshipForm(await this.getResource(`/starships/${id}/`), id);
   }
 
-  planetForm(planet, id){
+  planetForm = (planet, id) => {
     return {
       imgPath: `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`,
       name: planet.name,
@@ -49,7 +49,7 @@ export default class SwapiService {
     }
   }
 
-  starshipForm(starship, id){
+  starshipForm = (starship, id) => {
     return {
       imgPath: `https://starwars-visualguide.com/assets/img/starships/${id+1}.jpg`,
       name: starship.name,
@@ -63,7 +63,7 @@ export default class SwapiService {
     }
   }
 
-  personForm(people, id){
+  personForm = (people, id) => {
     const ident = people.url.replace(/\D/g, '');
     return {
       idKey: ident,

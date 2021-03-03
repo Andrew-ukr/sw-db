@@ -22,6 +22,11 @@ export default class RandomPlanet extends Component {
     this.interval = setInterval(this.updatePlanets, 2000);
   }
 
+  componentWillMount() {
+    clearInterval(this.interval)
+  }
+
+
   getData = new SwapiService();
 
   erroMassage = (err) => {

@@ -1,31 +1,30 @@
 import React, { Component } from 'react';
-import SwapiService from '../../services/swapi-service.js';
 import Spiner from '../spiner/';
 import ErrMassage from '../err-massage/';
 import './item-list.css';
 
 export default class ItemList extends Component {
   state = {
-    peopleList: null,
+    itemList: null,
     err: false,
     loading: true
   }
 
-  getData = new SwapiService();
-
   erroMassage = (err) => {
     this.setState({
-      peopleList: null,
+      itemList: null,
       err: true,
       loading: false
     })
   }
 
   componentDidMount() {
-    this.getData.getAllPeople()
-    .then((peopleList)=>{
+    const {getData} = this.props;
+
+    getData()
+    .then((itemList)=>{
       this.setState({
-        peopleList,
+        itemList,
         err: false,
         loading: false
       })
@@ -35,15 +34,17 @@ export default class ItemList extends Component {
 
   list = (arr) => {
     const {onPersonClick} = this.props;
+
     return (
       arr.map(item => {
+
         return (
           <li 
-            key={item.idKey}
+            key={`${item.idKey}${item.name}`}
             className="list-group-item"
             onClick={()=>{onPersonClick(item.idKey)}}
           >
-            {item.name}
+            {this.props.renderText(item)}
           </li>
         )
       })
@@ -51,8 +52,8 @@ export default class ItemList extends Component {
   }
   
   render() {
-    const {peopleList, loading, err} = this.state;
-    const listItems = peopleList ? this.list(peopleList): null;
+    const {itemList, loading, err} = this.state;
+    const listItems = itemList ? this.list(itemList): null;
     const loadingIcon = loading ? <Spiner />: null;
     const errorMassage = err ? <ErrMassage />: null;
 

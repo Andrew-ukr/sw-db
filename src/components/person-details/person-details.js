@@ -31,7 +31,7 @@ export default class PersonDetails extends Component {
       loading: false,
     })
   }
-
+  
   componentDidUpdate(prevProps) {
     if (this.props.data !== prevProps.data) {
       this.updataDetails(this.props.data)
@@ -41,6 +41,10 @@ export default class PersonDetails extends Component {
         loading: true,
       })
     }
+  }
+  
+  componentDidCatch(error, info) {
+    this.erroMassage(error);
   }
   
   render() {
@@ -63,6 +67,9 @@ export default class PersonDetails extends Component {
   }
 }
 
+/**
+ * компонент (дефолтний контент)
+ */
 const DefaultContent = ({details}) => {
   const {imgPath, gender, birthYear, eyeColor } = details;
 

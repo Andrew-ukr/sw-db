@@ -2,79 +2,44 @@ import React, {Component} from 'react';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
-import ItemList from '../item-list';
-import PersonDetails from '../person-details';
-import SwapiService from '../../services/swapi-service';
-
+import PeoplePage from '../people-page';
+import ErrMassage from '../err-massage';
+import ItemDetails from '../item-details';
+import Row from '../row/row';
+import SwapiService from '../../services/swapi-service.js'
 import './app.css';
 
 export default class App extends Component {
-  state= {
-    personId: null,
-    planetId: null,
-    starshipId: null,
+  state = {
+    errorMsg: false
   }
 
-  getData = new SwapiService();
-
-  onPersonClick = (id) => {
+  componentDidCatch(error, info) {
     this.setState({
-      personId: id,
+      errorMsg: true
     })
   }
-
+  
+  getData = new SwapiService();
 
   render() {
+
+    if (this.state.errorMsg) {
+      return <ErrMassage />
+    }
+
+    const persondetails = (<ItemDetails data={4} getData={this.getData.getPerson}/>)
+    const starshipdetails = (<ItemDetails data={5} getData={this.getData.getPlanet}/>)
+
     return (
       <div className="content-body">
         <Header />
         <RandomPlanet />
-  
-        <div className="row mb2 list">
-          <div className="col-md-6">
-            <ItemList 
-              renderText={(item => `${item.name} , ${item.gender} , ${item.birthYear}`)}
-              onPersonClick={this.onPersonClick}
-              getData={this.getData.getAllPeople}
-            />
-          </div>
-          <div className="col-md-6">
-            <PersonDetails 
-              data={this.state.personId}
-            />
-          </div>
-        </div>
 
-        <div className="row mb2 list">
-          <div className="col-md-6">
-            <ItemList 
-              renderText={(item => `${item.name} , population : ${item.population}`)}
-              onPersonClick={this.onPersonClick}
-              getData={this.getData.getAllPlanets}
-            />
-          </div>
-          <div className="col-md-6">
-            <PersonDetails 
-              data={this.state.planetId}
-            />
-          </div>
-        </div>
-
-        <div className="row mb2 list">
-          <div className="col-md-6">
-            <ItemList 
-              renderText={(item => (<span>dfdfdfdf</span>))}
-              onPersonClick={this.onPersonClick}
-              getData={this.getData.getAllStarships}
-            />
-          </div>
-          <div className="col-md-6">
-            <PersonDetails 
-              data={this.state.starshipId}
-            />
-          </div>
-        </div>
-
+        <Row 
+          left={persondetails}
+          right={starshipdetails}
+        />
       </div>
     );
   }
